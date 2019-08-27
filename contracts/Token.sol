@@ -1,9 +1,9 @@
 pragma solidity ^0.5.0;
 
-contract RadagastToken1 {
+contract Token {
   string public name = "Radagast Token #1";
   string public symbol = "RT1";
-  string public standard = "Radagast Token v1.0";
+  string public standard = "Radagast Token #1 v1.0";
   uint256 public totalSupply;
 
   event Transfer(
@@ -27,6 +27,7 @@ contract RadagastToken1 {
     totalSupply = _initialSupply;
   }
 
+  // Allows user to send tokens to another account
   function transfer(address _to, uint256 _value) public returns (bool success) {
     require(balanceOf[msg.sender] >= _value, 'not enough in balance');
 
@@ -38,7 +39,10 @@ contract RadagastToken1 {
     return true;
   }
 
+  // Allows another account to spend tokens, like on a cryptocurrency exchange
   function approve(address _spender, uint256 _value) public returns (bool success) {
+    // Updates the allowance mapping to see
+    // how much the account is allows to spend
     allowance[msg.sender][_spender] = _value;
 
     emit Approval(msg.sender, _spender, _value);
@@ -46,6 +50,7 @@ contract RadagastToken1 {
     return true;
   }
 
+  // Allos another account to transfer tokens
   function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
     require(_value <= balanceOf[_from], 'insufficient tokens in balance');
     require(_value <= allowance[_from][msg.sender], 'insufficient tokens in allowance');
